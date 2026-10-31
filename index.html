@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio - Cantika Aulia Aninditha</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Poppins & Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sakura: {
+                            50: '#fff5f7',
+                            100: '#ffe3ec',
+                            200: '#ffc6d9',
+                            300: '#ff9ebb',
+                            400: '#ff6693',
+                            500: '#f83b73',
+                            600: '#e11d59',
+                            700: '#bd1045',
+                            800: '#9d113c',
+                            900: '#841337',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Animation & Custom Styles */
+        body {
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe3ec 50%, #ffc6d9 100%);
+            background-attachment: fixed;
+        }
+
+        /* Canvas Bunga Sakura Falling Animation */
+        #sakura-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(248, 59, 115, 0.1);
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Soft Glow */
+        .glow-pink {
+            box-shadow: 0 0 25px rgba(248, 59, 115, 0.35);
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #e11d59 0%, #ff6693 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Floating animation for decorative elements */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(3deg); }
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-700 antialiased selection:bg-sakura-300 selection:text-sakura-900">
+
+    <!-- Canvas Animasi Kelopak Sakura -->
+    <canvas id="sakura-canvas"></canvas>
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl text-sakura-500"><i class="fa-solid font-bold fa-spa"></i></span>
+                    <span class="font-heading font-bold text-lg text-sakura-800 tracking-wide">Cantika.</span>
+                </div>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 font-medium text-sm">
+                    <a href="#beranda" class="text-sakura-700 hover:text-sakura-500 transition-colors">Beranda</a>
+                    <a href="#tentang" class="text-gray-600 hover:text-sakura-500 transition-colors">Tentang Saya</a>
+                    <a href="#keahlian" class="text-gray-600 hover:text-sakura-500 transition-colors">Keahlian TKJ</a>
+                    <a href="#proyek" class="text-gray-600 hover:text-sakura-500 transition-colors">Portofolio</a>
+                    <a href="#kontak" class="text-gray-600 hover:text-sakura-500 transition-colors">Kontak</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-sakura-700 hover:text-sakura-500 focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-sakura-100 px-4 pt-2 pb-4 space-y-2">
+            <a href="#beranda" class="block px-3 py-2 rounded-md text-sakura-700 font-medium hover:bg-sakura-100">Beranda</a>
+            <a href="#tentang" class="block px-3 py-2 rounded-md text-gray-600 hover:bg-sakura-100">Tentang Saya</a>
+            <a href="#keahlian" class="block px-3 py-2 rounded-md text-gray-600 hover:bg-sakura-100">Keahlian TKJ</a>
+            <a href="#proyek" class="block px-3 py-2 rounded-md text-gray-600 hover:bg-sakura-100">Portofolio</a>
+            <a href="#kontak" class="block px-3 py-2 rounded-md text-gray-600 hover:bg-sakura-100">Kontak</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section / Beranda -->
+    <section id="beranda" class="min-h-screen pt-24 pb-12 flex items-center justify-center relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-20">
+            <!-- Profil Avatar / Decorative Image -->
+            <div class="relative inline-block mb-6 animate-float">
+                <div class="w-36 h-36 sm:w-44 sm:h-44 rounded-full p-2 bg-gradient-to-tr from-sakura-300 via-sakura-400 to-sakura-200 shadow-xl glow-pink mx-auto">
+                    <!-- Avatar Image -->
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400" 
+                         alt="Cantika Aulia Aninditha" 
+                         class="w-full h-full object-cover rounded-full border-4 border-white"
+                         onerror="this.src='https://placehold.co/400x400/ffc6d9/841337?text=Cantika'">
+                </div>
+                <div class="absolute bottom-2 right-2 bg-white p-2.5 rounded-full shadow-lg text-sakura-500 border border-sakura-200">
+                    <i class="fa-solid fa-seedling text-lg"></i>
+                </div>
+            </div>
+
+            <!-- Greeting Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-sakura-200 text-sakura-700 text-xs sm:text-sm font-medium mb-4 shadow-sm">
+                <i class="fa-solid fa-sparkles text-sakura-400"></i> Halo, Selamat Datang di Portofolio Saya
+            </div>
+
+            <!-- Main Heading -->
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-heading font-bold text-gray-800 tracking-tight mb-3">
+                <span class="text-gradient">Cantika Aulia Aninditha</span>
+            </h1>
+            
+            <p class="text-base sm:text-xl font-medium text-sakura-800 mb-6 max-w-2xl mx-auto">
+                Siswa Kelas XII TKJ 1 — Teknik Komputer dan Jaringan
+            </p>
+
+            <p class="text-sm sm:text-base text-gray-600 max-w-xl mx-auto mb-8 leading-relaxed">
+                Fokus pada infrastruktur jaringan, konfigurasi server, serta perakitan & perawatan perangkat komputer dengan semangat belajar yang tinggi.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#kontak" class="px-6 py-3 rounded-full bg-gradient-to-r from-sakura-500 to-sakura-600 text-white font-medium shadow-lg hover:shadow-sakura-300/50 hover:scale-105 transition-all duration-300 flex items-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i> Hubungi Saya
+                </a>
+                <a href="#tentang" class="px-6 py-3 rounded-full glass-card text-sakura-700 font-medium hover:bg-white hover:scale-105 transition-all duration-300 flex items-center gap-2 border border-sakura-200">
+                    <i class="fa-solid fa-user"></i> Data Diri
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tentang Saya Section -->
+    <section id="tentang" class="py-16 relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-4xl font-heading font-bold text-gray-800">Tentang <span class="text-sakura-600">Saya</span></h2>
+                <div class="w-16 h-1 bg-sakura-400 mx-auto mt-2 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Info Bio Card -->
+                <div class="glass-card p-6 sm:p-8 rounded-3xl relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-sakura-200/50 rounded-full blur-2xl"></div>
+                    <h3 class="text-xl font-heading font-semibold text-sakura-800 mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-id-card text-sakura-500"></i> Biodata Lengkap
+                    </h3>
+                    
+                    <ul class="space-y-4 text-sm sm:text-base">
+                        <li class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-sakura-100 pb-3">
+                            <span class="text-gray-500 font-medium flex items-center gap-2">
+                                <i class="fa-solid fa-signature text-sakura-400 w-5"></i> Nama Lengkap:
+                            </span>
+                            <span class="font-semibold text-gray-800 mt-1 sm:mt-0">Cantika Aulia Aninditha</span>
+                        </li>
+                        <li class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-sakura-100 pb-3">
+                            <span class="text-gray-500 font-medium flex items-center gap-2">
+                                <i class="fa-solid fa-graduation-cap text-sakura-400 w-5"></i> Kelas:
+                            </span>
+                            <span class="font-semibold text-gray-800 mt-1 sm:mt-0">XII TKJ 1</span>
+                        </li>
+                        <li class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-sakura-100 pb-3">
+                            <span class="text-gray-500 font-medium flex items-center gap-2">
+                                <i class="fa-solid fa-network-wired text-sakura-400 w-5"></i> Jurusan:
+                            </span>
+                            <span class="font-semibold text-gray-800 mt-1 sm:mt-0 text-right">Teknik Komputer & Jaringan</span>
+                        </li>
+                        <li class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-sakura-100 pb-3">
+                            <span class="text-gray-500 font-medium flex items-center gap-2">
+                                <i class="fa-solid fa-cake-candles text-sakura-400 w-5"></i> TTL:
+                            </span>
+                            <span class="font-semibold text-gray-800 mt-1 sm:mt-0">Pekalongan, 12 Agustus 2009</span>
+                        </li>
+                        <li class="flex flex-col sm:flex-row sm:items-center justify-between">
+                            <span class="text-gray-500 font-medium flex items-center gap-2">
+                                <i class="fa-solid fa-location-dot text-sakura-400 w-5"></i> Asal Kota:
+                            </span>
+                            <span class="font-semibold text-gray-800 mt-1 sm:mt-0">Pekalongan, Jawa Tengah</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Descriptive Text Card -->
+                <div class="space-y-6">
+                    <div class="glass-card p-6 sm:p-8 rounded-3xl">
+                        <div class="text-3xl text-sakura-400 mb-3"><i class="fa-solid fa-quote-left"></i></div>
+                        <p class="text-gray-600 leading-relaxed text-sm sm:text-base mb-4">
+                            Saya adalah seorang siswi jurusan Teknik Komputer dan Jaringan yang memiliki ketertarikan mendalam pada teknologi jaringan komunikasi, konfigurasi perangkat router/switch, manajemen server, dan troubleshooting perangkat keras.
+                        </p>
+                        <p class="text-gray-600 leading-relaxed text-sm sm:text-base">
+                            Selalu antusias untuk mempelajari hal-hal baru di bidang IT, teliti dalam berpraktik, serta siap berkontribusi dalam tim maupun kerja mandiri.
+                        </p>
+                    </div>
+
+                    <!-- Highlight Badges -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass-card p-4 rounded-2xl text-center">
+                            <div class="text-2xl font-bold text-sakura-600 mb-1">XII</div>
+                            <div class="text-xs text-gray-500 uppercase tracking-wider">Tingkat Akhir</div>
+                        </div>
+                        <div class="glass-card p-4 rounded-2xl text-center">
+                            <div class="text-2xl font-bold text-sakura-600 mb-1">TKJ</div>
+                            <div class="text-xs text-gray-500 uppercase tracking-wider">Spesialisasi</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Keahlian / Skills Section -->
+    <section id="keahlian" class="py-16 relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-4xl font-heading font-bold text-gray-800">Keahlian <span class="text-sakura-600">Teknik</span></h2>
+                <p class="text-gray-600 text-sm sm:text-base mt-2">Kompetensi yang dipelajari di Jurusan TKJ</p>
+                <div class="w-16 h-1 bg-sakura-400 mx-auto mt-2 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Skill 1 -->
+                <div class="glass-card p-6 rounded-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-sakura-100 text-sakura-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-server"></i>
+                    </div>
+                    <h3 class="font-heading font-semibold text-lg text-gray-800 mb-2">Jaringan Computer (MikroTik)</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">Konfigurasi RouterOS, Routing, Bandwidth Management, Firewalls, dan Wireless Access Point.</p>
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                        <div class="bg-sakura-500 h-full rounded-full" style="width: 85%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 2 -->
+                <div class="glass-card p-6 rounded-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-sakura-100 text-sakura-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <h3 class="font-heading font-semibold text-lg text-gray-800 mb-2">Cisco Packet Tracer</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">Simulasi topologi jaringan LAN/WAN, VLAN, Subnetting, dan konfigurasi IP Addressing.</p>
+                    <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                        <div class="bg-sakura-500 h-full rounded-full" style="width: 80%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 3 -->
+                <div class="glass-card p-6 rounded-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-sakura-100 text-sakura-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-desktop"></i>
+                    </div>
+                    <h3 class="font-heading font-semibold text-lg text-gray-800 mb-2">Perakitan & OS Installation</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">Perakitan hardware PC, instalasi sistem operasi Windows/Linux, serta maintenance berkala.</p>
+                    <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                        <div class="bg-sakura-500 h-full rounded-full" style="width: 90%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 4 -->
+                <div class="glass-card p-6 rounded-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-sakura-100 text-sakura-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-hard-drive"></i>
+                    </div>
+                    <h3 class="font-heading font-semibold text-lg text-gray-800 mb-2">Administrasi Server</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">Pengenalan Linux Server (Debian/Ubuntu), Web Server, DHCP Server, & DNS Configuration.</p>
+                    <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                        <div class="bg-sakura-500 h-full rounded-full" style="width: 75%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 5 -->
+                <div class="glass-card p-6 rounded-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-sakura-100 text-sakura-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-ethernet"></i>
+                    </div>
+                    <h3 class="font-heading font-semibold text-lg text-gray-800 mb-2">Pengabelan (Crimping)</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">Pembuatan kabel UTP (Straight & Crossover), penggunaan Splicer Fiber Optic & Tester Jaringan.</p>
+                    <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                        <div class="bg-sakura-500 h-full rounded-full" style="width: 95%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 6 -->
+                <div class="glass-card p-6 rounded-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-sakura-100 text-sakura-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-wrench"></i>
+                    </div>
+                    <h3 class="font-heading font-semibold text-lg text-gray-800 mb-2">Troubleshooting</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">Menganalisis & memperbaiki masalah koneksi jaringan, konflik IP, serta kerusakan sistem ringan.</p>
+                    <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                        <div class="bg-sakura-500 h-full rounded-full" style="width: 85%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project / Portofolio Section -->
+    <section id="proyek" class="py-16 relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-4xl font-heading font-bold text-gray-800">Portofolio <span class="text-sakura-600">Praktikum</span></h2>
+                <p class="text-gray-600 text-sm sm:text-base mt-2">Proyek & Praktikum Sekolah yang Pernah Dikerjakan</p>
+                <div class="w-16 h-1 bg-sakura-400 mx-auto mt-2 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card Proyek 1 -->
+                <div class="glass-card rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                    <div class="h-44 bg-sakura-200 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=600" alt="Networking Project" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-sakura-900/20"></div>
+                        <span class="absolute top-3 right-3 bg-white/90 text-sakura-700 text-xs px-3 py-1 rounded-full font-semibold">MikroTik</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-heading font-semibold text-base text-gray-800 mb-2">Setting Hotspot Server MikroTik</h3>
+                        <p class="text-xs text-gray-600 leading-relaxed mb-4">Membangun jaringan hotspot sekolah dengan manajemen user profile, limitasi bandwidth, dan desain login page disesuaikan.</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="bg-sakura-100 text-sakura-700 text-[10px] px-2 py-0.5 rounded">RouterOS</span>
+                            <span class="bg-sakura-100 text-sakura-700 text-[10px] px-2 py-0.5 rounded">Winbox</span>
+                            <span class="bg-sakura-100 text-sakura-700 text-[10px] px-2 py-0.5 rounded">DNS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Proyek 2 -->
+                <div class="glass-card rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                    <div class="h-44 bg-sakura-200 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=600" alt="Server Project" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-sakura-900/20"></div>
+                        <span class="absolute top-3 right-3 bg-white/90 text-sakura-700 text-xs px-3 py-1 rounded-full font-semibold">Linux</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-heading font-semibold text-base text-gray-800 mb-2">Instalasi Server Debian 11</h3>
+                        <p class="text-xs text-gray-600 leading-relaxed mb-4">Konfigurasi DHCP Server, Web Server Apache, dan FTP Server berbasis CLI pada sistem operasi Debian 11.</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="bg-sakura-100 text-sakura-700 text-[10px] px-2 py-0.5 rounded">Debian</span>
+                            <span class="bg-sakura-100 text-sakura-700 text-[10px] px-2 py-0.5 rounded">CLI</span>
+                            <span class="bg-sakura-100 text-sakura-700 text-[10px] px-2 py-0.5 rounded">Apache</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Proyek 3 -->
+                <div class="glass-card rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                    <div class="h-44 bg-sakura-200 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&q=80&w=600" alt="Cisco Project" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-sakura-900/20"></div>
+                        <span class="absolute top-3 right-3 bg-white/90 text-sakura-700 text-xs px-3 py-1 rounded-full font-semibold">Cisco</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-heading font-semibold text-base text-gray-800 mb-2">Desain Topologi Inter-VLAN</h3>
+                        <p class="text-xs text-gray-600 leading-relaxed mb-4">Merancang topologi multi-floor kantor menggunakan Cisco Packet Tracer dengan VLAN dan Inter-VLAN Routing.</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="bg-sakura-100 text-sakura-700 text-[10px] px-2 py-0.5 rounded">Packet Tracer</span>
+                            <span class="bg-sakura-100 text-sakura-700 text-[10px] px-2 py-0.5 rounded">VLAN</span>
+                            <span class="bg-sakura-100 text-sakura-700 text-[10px] px-2 py-0.5 rounded">Switching</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontak Section -->
+    <section id="kontak" class="py-16 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-3xl p-6 sm:p-10 shadow-xl border border-sakura-200">
+                <div class="text-center mb-8">
+                    <span class="w-12 h-12 bg-sakura-100 text-sakura-600 rounded-full inline-flex items-center justify-center text-xl mb-3">
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-heading font-bold text-gray-800">Hubungi <span class="text-sakura-600">Saya</span></h2>
+                    <p class="text-gray-600 text-xs sm:text-sm mt-1">Tertarik bekerja sama atau ingin bertanya seputar jurusan TKJ?</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Informasional Kontak -->
+                    <div class="space-y-4 text-sm">
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/60">
+                            <div class="w-10 h-10 rounded-lg bg-sakura-500 text-white flex items-center justify-center">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 font-medium">Lokasi</p>
+                                <p class="font-semibold text-gray-800">Pekalongan, Jawa Tengah</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/60">
+                            <div class="w-10 h-10 rounded-lg bg-sakura-500 text-white flex items-center justify-center">
+                                <i class="fa-solid fa-school"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 font-medium">Kelas / Jurusan</p>
+                                <p class="font-semibold text-gray-800">XII TKJ 1 (Teknik Komputer & Jaringan)</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/60">
+                            <div class="w-10 h-10 rounded-lg bg-sakura-500 text-white flex items-center justify-center">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 font-medium">Email</p>
+                                <p class="font-semibold text-gray-800">cantika.aulia@example.com</p>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 flex gap-3">
+                            <a href="#" class="w-10 h-10 rounded-full bg-sakura-100 text-sakura-700 flex items-center justify-center hover:bg-sakura-500 hover:text-white transition-colors">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-sakura-100 text-sakura-700 flex items-center justify-center hover:bg-sakura-500 hover:text-white transition-colors">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-sakura-100 text-sakura-700 flex items-center justify-center hover:bg-sakura-500 hover:text-white transition-colors">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Form Pesan Dummy -->
+                    <form id="contact-form" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Nama Pengirim</label>
+                            <input type="text" required placeholder="Masukkan nama Anda" class="w-full px-4 py-2.5 rounded-xl border border-sakura-200 focus:outline-none focus:ring-2 focus:ring-sakura-400 bg-white/70 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Email / Kontak</label>
+                            <input type="email" required placeholder="nama@email.com" class="w-full px-4 py-2.5 rounded-xl border border-sakura-200 focus:outline-none focus:ring-2 focus:ring-sakura-400 bg-white/70 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Pesan</label>
+                            <textarea rows="3" required placeholder="Tuliskan pesan Anda di sini..." class="w-full px-4 py-2.5 rounded-xl border border-sakura-200 focus:outline-none focus:ring-2 focus:ring-sakura-400 bg-white/70 text-sm"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3 rounded-xl bg-sakura-500 text-white font-medium hover:bg-sakura-600 transition-colors shadow-md flex items-center justify-center gap-2 text-sm">
+                            <i class="fa-solid fa-paper-plane"></i> Kirim Pesan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-6 border-t border-sakura-200 text-center text-xs text-sakura-800 font-medium">
+        <p>&copy; 2026 Cantika Aulia Aninditha • XII TKJ 1 Pekalongan. All Rights Reserved.</p>
+        <p class="mt-1 text-[11px] text-gray-500">Dibuat dengan tema Bunga Sakura Pink 🌸</p>
+    </footer>
+
+    <!-- Custom Notification Box (Pengganti Alert) -->
+    <div id="toast-msg" class="fixed bottom-5 right-5 glass-card px-5 py-3 rounded-2xl shadow-xl hidden z-50 flex items-center gap-3 border-l-4 border-sakura-500 transition-all">
+        <i class="fa-solid fa-circle-check text-sakura-500 text-xl"></i>
+        <span id="toast-text" class="text-xs sm:text-sm text-gray-700 font-medium">Pesan berhasil dikirim!</span>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Toggle Mobile Menu
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Contact Form Submission (No Alert used)
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const toast = document.getElementById('toast-msg');
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3500);
+            this.reset();
+        });
+
+        // --- ANIMASI KELOPAK BUNGA SAKURA (Sakura Petals Animation) ---
+        const canvas = document.getElementById('sakura-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        class Petal {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * -height;
+                this.size = Math.random() * 8 + 8; // Ukuran kelopak
+                this.speedY = Math.random() * 1.2 + 0.8; // Kecepatan jatuh
+                this.speedX = Math.random() * 0.8 - 0.4; // Goyangan samping
+                this.angle = Math.random() * 360;
+                this.spin = Math.random() * 2 - 1; // Rotasi kelopak
+                this.opacity = Math.random() * 0.5 + 0.4;
+                // Variasi warna pink sakura
+                const colors = ['#ffb7c5', '#ff9ebb', '#ffc6d9', '#f83b73'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += Math.sin(this.y * 0.01) + this.speedX;
+                this.angle += this.spin;
+
+                // Reset jika keluar dari layar bawah
+                if (this.y > height + 20) {
+                    this.reset();
+                    this.y = -10;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.angle * Math.PI) / 180);
+                ctx.globalAlpha = this.opacity;
+
+                // Menggambar kelopak sakura sederhana
+                ctx.beginPath();
+                ctx.fillStyle = this.color;
+                // Bentuk kelopak sakura berliku
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(-this.size / 2, -this.size / 2, -this.size, this.size / 3, 0, this.size);
+                ctx.bezierCurveTo(this.size, this.size / 3, this.size / 2, -this.size / 2, 0, 0);
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        // Inisialisasi jumlah kelopak
+        const petals = [];
+        const petalCount = 45; // Jumlah animasi bunga sakura
+        for (let i = 0; i < petalCount; i++) {
+            petals.push(new Petal());
+        }
+
+        // Loop Animasi
+        function animateSakura() {
+            ctx.clearRect(0, 0, width, height);
+            petals.forEach(petal => {
+                petal.update();
+                petal.draw();
+            });
+            requestAnimationFrame(animateSakura);
+        }
+
+        window.onload = function() {
+            animateSakura();
+        };
+    </script>
+</body>
+</html>
